@@ -17,6 +17,7 @@
                                 <th>Giới tính</th>
                                 <th>SĐT</th>
                                 <th>Ngày sinh</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +29,7 @@
                                 <td>{{ ($student->gender == 1) ? 'Nam' : 'Nữ' }}</td>
                                 <td>{{ $student->phone }}</td>
                                 <td>{{ date('d-m-Y', strtotime($student->birthday)) }}</td>
+                                <td><a href="student/{{ $student->id }}/edit"> Edit </a> | Delete</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -44,8 +46,8 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-    $('#students-list').DataTable();
-} );
+        $('#students-list').DataTable();
+    });
 </script>
 
 @endsection
