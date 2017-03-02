@@ -15,6 +15,11 @@
                         </ul>
                     </div>
                 @endif
+                @if(Session::has("success"))
+                   <script>
+                    window.alert('Edit successfully');
+                   </script>
+                @endif
                 <div class="panel-heading">Sua thong tin sinh vien</div>
 
                 <div class="panel-body">
@@ -25,20 +30,30 @@
                             <input type="text" class="form-control" name="studentName" value="{{ $student->name }}">
                         </div>
                         <div class="form-group">
+                            <label for="studentId">Student ID Number</label>
+                            <input type="text" class="form-control" name="studentId" value="{{ $student->student_id }}">
+                        </div>
+                        <div class="form-group">
                             <label for="studentEmail">Email</label>
                             <input type="email" class="form-control" name="studentEmail" value="{{ $student->email }}">
                         </div>
                         <div class="form-group">
                             <label for="studentClass">Class</label>
-                            <input type="text" class="form-control" name="studentClass" value="{{ $student->class }}">
+                            <select class="form-control" name="studentClass">
+                                @foreach($classes as $class)
+                                    <option value="{{ $class->id }}" {{ ($class->id == $student->class_id) ? 'selected' : '' }}>
+                                        {{ $class->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="studentGender">Gender</label>
                             <select class="form-control" name="studentGender">
-                                <option value="" {{ ($student->gender == 1) ? 'selected' : '' }}>Nam</option>
-                                <option value="" {{ ($student->gender == 0) ? 'selected' : '' }}>Nữ</option>
+                                <option value="1" {{ ($student->gender == 1) ? 'selected' : '' }}>Nam</option>
+                                <option value="0" {{ ($student->gender == 0) ? 'selected' : '' }}>Nữ</option>
                             </select>
-                        </div>  
+                        </div>
                         <div class="form-group">
                             <label for="studentPhone">Phone</label>
                             <input type="text" class="form-control" name="studentPhone" value="{{ $student->phone }}">

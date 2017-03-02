@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
 use App\Student;
+use App\Classes;
+use Session;
 
 class StudentController extends Controller
 {
@@ -27,7 +27,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::get();
+        $students = Student::with('class')->get();
         return view('student.index', ['students' => $students]);
     }
 
@@ -71,8 +71,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = Student::find($id);
-        return view('student.edit', ['student' => $student]);
+        $student = Student::with('class')->find($id);
+        $classes = Classes::get();
+        return view('student.edit', ['student' => $student, 'classes' => $classes]);
     }
 
     /**
@@ -86,6 +87,7 @@ class StudentController extends Controller
     {
         $this->validate($request, [
             'studentName' => 'required',
+            'studentId' => 'required',
             'studentEmail' => 'required|email',
             'studentClass' => 'required',
             'studentGender' => 'required',
@@ -94,13 +96,15 @@ class StudentController extends Controller
             ]);
 
         $student = Student::find($id);
+        $classes = Classes::get();
 
         $student->name = $request->input('studentName');
+        $student->student_id = $request->input('studentId');
         $student->email = $request->input('studentEmail');
-        $student->class = $request->input('studentClass');
+        $student->class_id = $request->input('studentClass');
         $student->gender = $request->input('studentGender');
         $student->phone = $request->input('studentPhone');
-        $student->birthday = $request->input('studentBirthday');
+        $student->birthday = date('Y-m-d', strtotime(str_replace('/', '-', $request->input('studentBirthday'))));
 
         try {
             $student->save();
@@ -109,7 +113,8 @@ class StudentController extends Controller
             return redirect()->to($this->getRedirectUrl());
         }
 
-        return view('student.edit', ['student' => $student]);
+        Session::flash('success', '');
+        return view('student.edit', ['student' => $student, 'classes' => $classes]);
     }
 
     /**

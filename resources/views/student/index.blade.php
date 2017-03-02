@@ -12,6 +12,7 @@
                         <thead>
                             <tr>
                                 <th>Tên SV</th>
+                                <th>MSSV</th>
                                 <th>Email</th>
                                 <th>Lớp</th>
                                 <th>Giới tính</th>
@@ -24,8 +25,9 @@
                         @foreach($students as $student)
                             <tr>
                                 <td>{{ $student->name }}</td>
+                                <td>{{ $student->student_id }}</td>
                                 <td>{{ $student->email }}</td>
-                                <td>{{ $student->class }}</td>
+                                <td>{{ $student->class->name }}</td>
                                 <td>{{ ($student->gender == 1) ? 'Nam' : 'Nữ' }}</td>
                                 <td>{{ $student->phone }}</td>
                                 <td>{{ date('d-m-Y', strtotime($student->birthday)) }}</td>
