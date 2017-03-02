@@ -38,7 +38,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $classes = Classes::get();
+        return view('student.create', ['classes' => $classes]);
     }
 
     /**
@@ -49,7 +50,35 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'studentName' => 'required',
+            'studentId' => 'required',
+            'studentEmail' => 'required|email',
+            'studentClass' => 'required',
+            'studentGender' => 'required',
+            'studentPhone' => 'required|numeric',
+            'studentBirthday' => 'required|date'
+        ]);
+
+        $student = new Student;
+
+        $student->name = $request->input('studentName');
+        $student->student_id = $request->input('studentId');
+        $student->email = $request->input('studentEmail');
+        $student->class_id = $request->input('studentClass');
+        $student->gender = $request->input('studentGender');
+        $student->phone = $request->input('studentPhone');
+        $student->birthday = date('Y-m-d', strtotime(str_replace('/', '-', $request->input('studentBirthday'))));
+        
+        try {
+            $student->save();
+        } catch (\Exception $e) {
+            flash($e->getMessage(), 'danger');
+            return redirect()->to($this->getRedirectUrl())->withInput($request->input());
+        }
+
+        Session::flash('create_success', '');
+        return redirect()->route('student.create');
     }
 
     /**
@@ -93,7 +122,7 @@ class StudentController extends Controller
             'studentGender' => 'required',
             'studentPhone' => 'required|numeric',
             'studentBirthday' => 'required|date'
-            ]);
+        ]);
 
         $student = Student::find($id);
         $classes = Classes::get();

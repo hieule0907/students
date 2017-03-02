@@ -40,7 +40,7 @@
             </div>
 
             <div class="text-right">
-                <button class="btn btn-default btn-md">Thêm sinh viên</button>
+                <a href="/student/create"><button class="btn btn-default btn-md">Thêm sinh viên</button></a>
             </div>
         </div>
     </div>
