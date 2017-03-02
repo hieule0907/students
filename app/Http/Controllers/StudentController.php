@@ -69,7 +69,7 @@ class StudentController extends Controller
         $student->gender = $request->input('studentGender');
         $student->phone = $request->input('studentPhone');
         $student->birthday = date('Y-m-d', strtotime(str_replace('/', '-', $request->input('studentBirthday'))));
-        
+
         try {
             $student->save();
         } catch (\Exception $e) {
@@ -154,6 +154,6 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::where('id', $id)->delete();
     }
 }

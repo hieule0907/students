@@ -23,7 +23,7 @@
                         </thead>
                         <tbody>
                         @foreach($students as $student)
-                            <tr>
+                            <tr id="student{{ $student->id }}">
                                 <td>{{ $student->name }}</td>
                                 <td>{{ $student->student_id }}</td>
                                 <td>{{ $student->email }}</td>
@@ -31,7 +31,10 @@
                                 <td>{{ ($student->gender == 1) ? 'Nam' : 'Nữ' }}</td>
                                 <td>{{ $student->phone }}</td>
                                 <td>{{ date('d-m-Y', strtotime($student->birthday)) }}</td>
-                                <td><a href="student/{{ $student->id }}/edit"> Edit </a> | Delete</td>
+                                <td>
+                                    <a href="student/{{ $student->id }}/edit"> Edit </a> | 
+                                    <button class="btn btn-sm btn-danger" id="deleteStudent" value="{{ $student->id }}"> Delete </a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -50,6 +53,28 @@
     $(document).ready(function() {
         $('#students-list').DataTable();
     });
+    $("#deleteStudent").click(function() {
+
+            var student_id = $(this).val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
+
+            $.ajax({
+                type: "DELETE",
+                url: '/student/' + student_id,
+                success: function (data) {
+                    console.log(data);
+                    $("#student" + student_id).remove();
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        })
 </script>
 
 @endsection
