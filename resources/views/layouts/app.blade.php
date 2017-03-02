@@ -45,10 +45,12 @@
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                @if (!Auth::guest())
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/student') }}">Students</a></li>
                 </ul>
+                @endif
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
