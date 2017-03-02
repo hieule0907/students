@@ -84,7 +84,32 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'studentName' => 'required',
+            'studentEmail' => 'required|email',
+            'studentClass' => 'required',
+            'studentGender' => 'required',
+            'studentPhone' => 'required|numeric',
+            'studentBirthday' => 'required|date'
+            ]);
+
+        $student = Student::find($id);
+
+        $student->name = $request->input('studentName');
+        $student->email = $request->input('studentEmail');
+        $student->class = $request->input('studentClass');
+        $student->gender = $request->input('studentGender');
+        $student->phone = $request->input('studentPhone');
+        $student->birthday = $request->input('studentBirthday');
+
+        try {
+            $student->save();
+        } catch (\Exception $e) {
+            flash($e->getMessage(), 'danger');
+            return redirect()->to($this->getRedirectUrl());
+        }
+
+        return view('student.edit', ['student' => $student]);
     }
 
     /**
