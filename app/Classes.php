@@ -15,4 +15,8 @@ class Classes extends Model
     protected $fillable = [
         'name'
     ];
+
+    public static function getClassList() {
+    	return self::get();
+    }
 }

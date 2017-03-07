@@ -32,8 +32,8 @@
                                 <td>{{ $student->phone }}</td>
                                 <td>{{ date('d-m-Y', strtotime($student->birthday)) }}</td>
                                 <td>
-                                    <a href="student/{{ $student->id }}/edit"> Edit </a> | 
-                                    <button class="btn btn-sm btn-danger" id="deleteStudent" value="{{ $student->id }}"> Delete </a>
+                                    <a href="student/{{ $student->id }}/edit"><button class="btn btn-sm btn-primary"> Edit </button></a> | 
+                                    <button class="btn btn-sm btn-danger delete-student" value="{{ $student->id }}"> Delete </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -52,8 +52,11 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#students-list').DataTable();
+
     });
-    $("#deleteStudent").click(function() {
+
+    $(document).on('click','.delete-student',function() {
+        if (confirm("Are you sure?")) {
 
             var student_id = $(this).val();
 
@@ -74,7 +77,10 @@
                     console.log('Error:', data);
                 }
             });
-        })
+        }
+        return false;
+    })
+    
 </script>
 
 @endsection

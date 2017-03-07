@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Student;
 use App\Classes;
 use Session;
+use App\Http\Requests\FormRequest;
 
 class StudentController extends Controller
 {
@@ -27,7 +28,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('class')->get();
+        $students = Student::getStudentList();
+
         return view('student.index', ['students' => $students]);
     }
 
@@ -38,7 +40,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $classes = Classes::get();
+        $classes = Classes::getClassList();
+
         return view('student.create', ['classes' => $classes]);
     }
 
@@ -48,17 +51,8 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormRequest $request)
     {
-        $this->validate($request, [
-            'studentName' => 'required',
-            'studentId' => 'required',
-            'studentEmail' => 'required|email',
-            'studentClass' => 'required',
-            'studentGender' => 'required',
-            'studentPhone' => 'required|numeric',
-            'studentBirthday' => 'required|date'
-        ]);
 
         $student = new Student;
 
@@ -71,13 +65,19 @@ class StudentController extends Controller
         $student->birthday = date('Y-m-d', strtotime(str_replace('/', '-', $request->input('studentBirthday'))));
 
         try {
+
             $student->save();
+
         } catch (\Exception $e) {
+
             flash($e->getMessage(), 'danger');
+
             return redirect()->to($this->getRedirectUrl())->withInput($request->input());
+
         }
 
         Session::flash('create_success', '');
+
         return redirect()->route('student.create');
     }
 
@@ -100,8 +100,16 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = Student::with('class')->find($id);
-        $classes = Classes::get();
+        $student = Student::findStudent($id);
+
+        if (empty($student)) {
+
+            return redirect()->route('student.index');
+
+        }
+
+        $classes = Classes::getClassList();
+
         return view('student.edit', ['student' => $student, 'classes' => $classes]);
     }
 
@@ -112,20 +120,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FormRequest $request, $id)
     {
-        $this->validate($request, [
-            'studentName' => 'required',
-            'studentId' => 'required',
-            'studentEmail' => 'required|email',
-            'studentClass' => 'required',
-            'studentGender' => 'required',
-            'studentPhone' => 'required|numeric',
-            'studentBirthday' => 'required|date'
-        ]);
 
-        $student = Student::find($id);
-        $classes = Classes::get();
+        $student = Student::findStudent($id);
 
         $student->name = $request->input('studentName');
         $student->student_id = $request->input('studentId');
@@ -136,14 +134,20 @@ class StudentController extends Controller
         $student->birthday = date('Y-m-d', strtotime(str_replace('/', '-', $request->input('studentBirthday'))));
 
         try {
+
             $student->save();
+
         } catch (\Exception $e) {
+
             flash($e->getMessage(), 'danger');
+
             return redirect()->to($this->getRedirectUrl());
+
         }
 
         Session::flash('success', '');
-        return view('student.edit', ['student' => $student, 'classes' => $classes]);
+
+        return redirect()->route('student.edit', ['student' => $student]);
     }
 
     /**
@@ -154,6 +158,6 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $student = Student::where('id', $id)->delete();
+        $student = Student::destroy($id);
     }
 }
