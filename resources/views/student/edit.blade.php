@@ -60,7 +60,10 @@
                         </div>
                         <div class="form-group">
                             <label for="studentBirthday">Birthday</label>
-                            <input type="text" class="form-control" name="studentBirthday" value="{{ date('d-m-Y', strtotime($student->birthday)) }}">
+                            <div class="input-group date">
+                                <input type="text" class="form-control" name="studentBirthday" value="{{ date('d-m-Y', strtotime($student->birthday)) }}">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
                         </div>
                         <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
@@ -71,4 +74,12 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    
+    $('.input-group').datepicker({
+        format: "dd-mm-yyyy",
+    });
+
+</script>
 @endsection

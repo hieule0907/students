@@ -54,27 +54,9 @@ class StudentController extends Controller
     public function store(FormRequest $request)
     {
 
-        $student = new Student;
+        $input = $request->all();
 
-        $student->name = $request->input('studentName');
-        $student->student_id = $request->input('studentId');
-        $student->email = $request->input('studentEmail');
-        $student->class_id = $request->input('studentClass');
-        $student->gender = $request->input('studentGender');
-        $student->phone = $request->input('studentPhone');
-        $student->birthday = date('Y-m-d', strtotime(str_replace('/', '-', $request->input('studentBirthday'))));
-
-        try {
-
-            $student->save();
-
-        } catch (\Exception $e) {
-
-            flash($e->getMessage(), 'danger');
-
-            return redirect()->to($this->getRedirectUrl())->withInput($request->input());
-
-        }
+        $student = Student::addStudent($input);
 
         Session::flash('create_success', '');
 
@@ -89,7 +71,9 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+
+        return redirect()->route('student.index');
+
     }
 
     /**
@@ -122,28 +106,9 @@ class StudentController extends Controller
      */
     public function update(FormRequest $request, $id)
     {
+        $input = $request->all();
 
-        $student = Student::findStudent($id);
-
-        $student->name = $request->input('studentName');
-        $student->student_id = $request->input('studentId');
-        $student->email = $request->input('studentEmail');
-        $student->class_id = $request->input('studentClass');
-        $student->gender = $request->input('studentGender');
-        $student->phone = $request->input('studentPhone');
-        $student->birthday = date('Y-m-d', strtotime(str_replace('/', '-', $request->input('studentBirthday'))));
-
-        try {
-
-            $student->save();
-
-        } catch (\Exception $e) {
-
-            flash($e->getMessage(), 'danger');
-
-            return redirect()->to($this->getRedirectUrl());
-
-        }
+        $student = Student::editStudent($id, $input);
 
         Session::flash('success', '');
 
@@ -158,6 +123,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
+
         $student = Student::destroy($id);
+        
     }
 }

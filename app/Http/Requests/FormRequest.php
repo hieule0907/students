@@ -53,7 +53,7 @@ class FormRequest extends Request
             'studentBirthday.required' => 'Ngày sinh không được để trống',
             'studentBirthday.date' => 'Ngày sinh không hợp lệ'
         ];
-}
+    }
 
 
 }

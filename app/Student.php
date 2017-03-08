@@ -27,4 +27,36 @@ class Student extends Model
     public static function findStudent($id) {
         return self::find($id);
     }
+
+    public static function addStudent($input) {
+        $student = new Student;
+
+        $student->name = $input['studentName'];
+        $student->student_id = $input['studentId'];
+        $student->email = $input['studentEmail'];
+        $student->class_id = $input['studentClass'];
+        $student->gender = $input['studentGender'];
+        $student->phone = $input['studentPhone'];
+        $student->birthday = date('Y-m-d', strtotime(str_replace('/', '-', $input['studentBirthday'])));
+
+        $student->save();
+
+    }
+
+    public static function editStudent($id, $input) {
+        $student = self::find($id);
+
+        $student->name = $input['studentName'];
+        $student->student_id = $input['studentId'];
+        $student->email = $input['studentEmail'];
+        $student->class_id = $input['studentClass'];
+        $student->gender = $input['studentGender'];
+        $student->phone = $input['studentPhone'];
+        $student->birthday = date('Y-m-d', strtotime(str_replace('/', '-', $input['studentBirthday'])));
+
+        $student->save();
+
+        return $student;
+    }
+    
 }
