@@ -23,6 +23,32 @@ class StudentController extends Controller
     }
 
     /**
+     * Standardize a name
+     * Uppercase first letter of word
+     * @return string
+     */
+    function standardizedName($name) {
+        $array  = explode(" ", $name);
+ 
+        foreach($array as $key => $value){
+            if(trim($value) == null) unset($array[$key]);
+        }
+         
+        $name = implode(" ", $array);
+        $name = strtolower($name);
+        $name = ucwords($name);
+        
+        return $name;
+    }
+
+    function trimSpace($array)
+    {
+        foreach ($array as $key => $value) {
+            $array[$key] = trim($value);
+        }
+        return $array;
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -56,6 +82,9 @@ class StudentController extends Controller
     {
 
         $input = $request->all();
+        
+        $input = self::trimSpace($input);
+        $input['studentName'] = self::standardizedName($input['studentName']);
 
         $student = Student::addStudent($input);
 
@@ -109,6 +138,10 @@ class StudentController extends Controller
     {
 
         $input = $request->all();
+
+        $input = self::trimSpace($input);
+
+        $input['studentName'] = self::standardizedName($input['studentName']);
 
         $student = Student::editStudent($id, $input);
 

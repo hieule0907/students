@@ -27,10 +27,12 @@ class FormRequest extends Request
 
         switch($this->method()) {
             case 'GET':
+
             case 'DELETE':
             {
                 return [];
             }
+
             case 'POST': 
             {
                 return [
@@ -43,7 +45,9 @@ class FormRequest extends Request
                     'studentBirthday' => 'required|date_format:d-m-Y|size:10'
                 ];
             }
+
             case 'PATCH':
+
             case 'PUT':
             {
                 return [
@@ -56,6 +60,7 @@ class FormRequest extends Request
                     'studentBirthday' => 'required|date_format:d-m-Y|size:10'
                 ];
             }
+            
             default: break;
         }
     }
