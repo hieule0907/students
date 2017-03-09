@@ -8,6 +8,7 @@ use App\Student;
 use App\Classes;
 use Session;
 use App\Http\Requests\FormRequest;
+use Redirect;
 
 class StudentController extends Controller
 {
@@ -106,9 +107,15 @@ class StudentController extends Controller
      */
     public function update(FormRequest $request, $id)
     {
+
         $input = $request->all();
 
         $student = Student::editStudent($id, $input);
+
+        if ($student == 1) {
+            Session::flash('duplicate_student_id','Mã SV đã tồn tại');
+            return Redirect::back();
+        }
 
         Session::flash('success', '');
 
@@ -125,6 +132,6 @@ class StudentController extends Controller
     {
 
         $student = Student::destroy($id);
-        
+
     }
 }

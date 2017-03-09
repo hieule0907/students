@@ -14,11 +14,13 @@
                         </ul>
                     </div>
                 @endif
+
                 @if(Session::has("create_success"))
                     <script>
                         window.alert('Add student successfully');
                     </script>
                 @endif
+
                 <div class="panel-heading">Add a new Student</div>
 
                 <div class="panel-body">

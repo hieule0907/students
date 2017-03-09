@@ -32,7 +32,9 @@ class Student extends Model
         $student = new Student;
 
         $student->name = $input['studentName'];
+
         $student->student_id = $input['studentId'];
+
         $student->email = $input['studentEmail'];
         $student->class_id = $input['studentClass'];
         $student->gender = $input['studentGender'];
@@ -49,6 +51,7 @@ class Student extends Model
         $student->name = $input['studentName'];
         $student->student_id = $input['studentId'];
         $student->email = $input['studentEmail'];
+
         $student->class_id = $input['studentClass'];
         $student->gender = $input['studentGender'];
         $student->phone = $input['studentPhone'];

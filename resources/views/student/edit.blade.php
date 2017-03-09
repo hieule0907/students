@@ -15,16 +15,19 @@
                         </ul>
                     </div>
                 @endif
+
                 @if(Session::has("success"))
                    <script>
-                    window.alert('Edit successfully');
+                        window.alert('Edit successfully');
                    </script>
                 @endif
+
                 <div class="panel-heading">Sua thong tin sinh vien</div>
 
                 <div class="panel-body">
                     <form method="POST" action="/student/{{ $student->id }}">
                         {{ method_field('PUT') }}
+                        <input type="hidden" name="id" value="{{ $student->id }}">
                         <div class="form-group">
                             <label for="studentName">Name</label>
                             <input type="text" class="form-control" name="studentName" value="{{ $student->name }}">
