@@ -26,6 +26,11 @@ class FormRequest extends Request
     {
 
         switch($this->method()) {
+            case 'GET':
+            case 'DELETE':
+            {
+                return [];
+            }
             case 'POST': 
             {
                 return [
@@ -38,13 +43,13 @@ class FormRequest extends Request
                     'studentBirthday' => 'required|date'
                 ];
             }
+            case 'PATCH':
             case 'PUT':
             {
-                $student = Student::where('id',$this->get('id'))->get();
                 return [
                     'studentName' => 'required',
-                    'studentId' => 'required',
-                    'studentEmail' => 'required|email|unique:students,email,'.$student->email,
+                    'studentId' => 'required|unique:students,student_id,'.$this->get('id'),
+                    'studentEmail' => 'required|email|unique:students,email,'.$this->get('id'),
                     'studentClass' => 'required',
                     'studentGender' => 'required',
                     'studentPhone' => 'required|numeric',

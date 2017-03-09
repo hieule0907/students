@@ -112,11 +112,6 @@ class StudentController extends Controller
 
         $student = Student::editStudent($id, $input);
 
-        if ($student == 1) {
-            Session::flash('duplicate_student_id','Mã SV đã tồn tại');
-            return Redirect::back();
-        }
-
         Session::flash('success', '');
 
         return redirect()->route('student.edit', ['student' => $student]);
