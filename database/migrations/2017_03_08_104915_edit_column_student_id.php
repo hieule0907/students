@@ -25,6 +25,9 @@ class EditColumnStudentId extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('students', function($table)
+        {
+           $table->dropColumn('student_id');
+        });
     }
 }

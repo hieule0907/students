@@ -29,13 +29,13 @@ class StudentController extends Controller
      * @return string
      */
     function standardizedName($name) {
+
         $array  = explode(" ", $name);
- 
         foreach($array as $key => $value){
             if(trim($value) == null) unset($array[$key]);
         }
-         
         $name = implode(" ", $array);
+        
         $name = strtolower($name);
         $name = ucwords($name);
         
@@ -53,7 +53,7 @@ class StudentController extends Controller
         }
         return $array;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
