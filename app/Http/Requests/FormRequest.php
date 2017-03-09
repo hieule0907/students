@@ -40,7 +40,7 @@ class FormRequest extends Request
                     'studentClass' => 'required',
                     'studentGender' => 'required',
                     'studentPhone' => 'required|numeric',
-                    'studentBirthday' => 'required|date'
+                    'studentBirthday' => 'required|date_format:d-m-Y|size:10'
                 ];
             }
             case 'PATCH':
@@ -53,7 +53,7 @@ class FormRequest extends Request
                     'studentClass' => 'required',
                     'studentGender' => 'required',
                     'studentPhone' => 'required|numeric',
-                    'studentBirthday' => 'required|date'
+                    'studentBirthday' => 'required|date_format:d-m-Y|size:10'
                 ];
             }
             default: break;
@@ -79,7 +79,8 @@ class FormRequest extends Request
             'studentPhone.required' => 'SĐT không được để trống',
             'studentPhone.numeric' => 'SĐT không hợp lệ',
             'studentBirthday.required' => 'Ngày sinh không được để trống',
-            'studentBirthday.date' => 'Ngày sinh không hợp lệ'
+            'studentBirthday.date_format' => 'Ngày sinh không hợp lệ',
+            'studentBirthday.size' => 'Ngày sinh không hợp lệ'
         ];
     }
 

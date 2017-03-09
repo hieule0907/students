@@ -40,6 +40,7 @@
                         <div class="form-group">
                             <label for="studentClass">Class</label>
                             <select class="form-control" name="studentClass">
+                                <option value="">- Chọn lớp học -</option>
                                 @foreach($classes as $class)
                                     <option value="{{ $class->id }}" {{ ($class->id == old('studentClass')) ? 'selected' : '' }}>
                                         {{ $class->name }}
@@ -50,8 +51,9 @@
                         <div class="form-group">
                             <label for="studentGender">Gender</label>
                             <select class="form-control" name="studentGender">
-                                <option value="1" {{ (old('studentGender') == 1) ? 'selected' : '' }}>Nam</option>
-                                <option value="0" {{ (old('studentGender') == 0) ? 'selected' : '' }}>Nữ</option>
+                                <option value="">- Chọn giới tính -</option>
+                                <option value="1" {{ (old('studentGender') == "1") ? 'selected' : '' }}>Nam</option>
+                                <option value="0" {{ (old('studentGender') == "0") ? 'selected' : '' }}>Nữ</option>
                             </select>
                         </div>
                         <div class="form-group">
