@@ -24,7 +24,7 @@
                 <div class="panel-heading">Add a new Student</div>
 
                 <div class="panel-body">
-                    <form method="POST" action="/student">
+                    <form method="POST" action="/student" id="create-form">
                         <div class="form-group">
                             <label for="studentName">Name</label>
                             <input type="text" class="form-control" name="studentName" value="{{ old('studentName') }}">
@@ -78,11 +78,4 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    
-    $('.input-group').datepicker({
-        format: "dd-mm-yyyy"
-    });
-
-</script>
 @endsection

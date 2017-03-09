@@ -25,7 +25,7 @@
                 <div class="panel-heading">Sua thong tin sinh vien</div>
 
                 <div class="panel-body">
-                    <form method="POST" action="/student/{{ $student->id }}">
+                    <form method="POST" action="/student/{{ $student->id }}" id="edit-form">
                         {{ method_field('PUT') }}
                         <input type="hidden" name="id" value="{{ $student->id }}">
                         <div class="form-group">
@@ -43,6 +43,7 @@
                         <div class="form-group">
                             <label for="studentClass">Class</label>
                             <select class="form-control" name="studentClass">
+                                <option value="">- Chọn lớp học -</option>
                                 @foreach($classes as $class)
                                     <option value="{{ $class->id }}" {{ ($class->id == $student->class_id) ? 'selected' : '' }}>
                                         {{ $class->name }}
@@ -53,6 +54,7 @@
                         <div class="form-group">
                             <label for="studentGender">Gender</label>
                             <select class="form-control" name="studentGender">
+                                <option value="">- Chọn giới tính -</option>
                                 <option value="1" {{ ($student->gender == 1) ? 'selected' : '' }}>Nam</option>
                                 <option value="0" {{ ($student->gender == 0) ? 'selected' : '' }}>Nữ</option>
                             </select>
@@ -78,11 +80,4 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    
-    $('.input-group').datepicker({
-        format: "dd-mm-yyyy",
-    });
-
-</script>
 @endsection

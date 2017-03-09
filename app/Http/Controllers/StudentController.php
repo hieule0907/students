@@ -24,6 +24,7 @@ class StudentController extends Controller
 
     /**
      * Standardize a name
+     * Remove redundant spaces between words
      * Uppercase first letter of word
      * @return string
      */
@@ -41,6 +42,10 @@ class StudentController extends Controller
         return $name;
     }
 
+    /**
+     * Trim spaces for form inputs
+     * @return array
+     */
     function trimSpace($array)
     {
         foreach ($array as $key => $value) {
@@ -48,6 +53,7 @@ class StudentController extends Controller
         }
         return $array;
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -140,7 +146,6 @@ class StudentController extends Controller
         $input = $request->all();
 
         $input = self::trimSpace($input);
-
         $input['studentName'] = self::standardizedName($input['studentName']);
 
         $student = Student::editStudent($id, $input);

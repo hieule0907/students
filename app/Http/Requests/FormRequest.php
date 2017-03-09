@@ -37,7 +37,7 @@ class FormRequest extends Request
             {
                 return [
                     'studentName' => 'required',
-                    'studentId' => 'required|unique:students,student_id',
+                    'studentId' => 'required|regex:/(^[A-Za-z0-9]+$)+/|unique:students,student_id',
                     'studentEmail' => 'required|email|unique:students,email',
                     'studentClass' => 'required',
                     'studentGender' => 'required',
@@ -52,7 +52,7 @@ class FormRequest extends Request
             {
                 return [
                     'studentName' => 'required',
-                    'studentId' => 'required|unique:students,student_id,'.$this->get('id'),
+                    'studentId' => 'required|regex:/(^[A-Za-z0-9]+$)+/|unique:students,student_id,'.$this->get('id'),
                     'studentEmail' => 'required|email|unique:students,email,'.$this->get('id'),
                     'studentClass' => 'required',
                     'studentGender' => 'required',
@@ -75,6 +75,7 @@ class FormRequest extends Request
         return [
             'studentName.required' => 'Tên sinh viên không được để trống',
             'studentId.required'  => 'Mã SV không được để trống',
+            'studentId.regex' => 'Mã SV chỉ được bao gồm chữ và số',
             'studentId.unique' => 'Mã SV đã tồn tại',
             'studentEmail.required' => 'Email không được để trống',
             'studentEmail.email' => 'Email không hợp lệ',

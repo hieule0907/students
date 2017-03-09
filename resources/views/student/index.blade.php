@@ -49,38 +49,4 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#students-list').DataTable();
-
-    });
-
-    $(document).on('click','.delete-student',function() {
-        if (confirm("Are you sure?")) {
-
-            var student_id = $(this).val();
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            })
-
-            $.ajax({
-                type: "DELETE",
-                url: '/student/' + student_id,
-                success: function (data) {
-                    console.log(data);
-                    $("#student" + student_id).remove();
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
-            });
-        }
-        return false;
-    })
-    
-</script>
-
 @endsection
