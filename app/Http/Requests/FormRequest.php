@@ -36,12 +36,13 @@ class FormRequest extends Request
             case 'POST': 
             {
                 return [
-                    'studentName' => 'required',
+                    'studentName' => 'required|
+                                    regex:/^[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/',
                     'studentId' => 'required|regex:/(^[A-Za-z0-9]+$)+/|unique:students,student_id',
                     'studentEmail' => 'required|email|unique:students,email',
                     'studentClass' => 'required',
                     'studentGender' => 'required',
-                    'studentPhone' => 'required|numeric',
+                    'studentPhone' => 'required|numeric|digits_between:10,11',
                     'studentBirthday' => 'required|date_format:d-m-Y|size:10'
                 ];
             }
@@ -51,12 +52,15 @@ class FormRequest extends Request
             case 'PUT':
             {
                 return [
-                    'studentName' => 'required',
-                    'studentId' => 'required|regex:/(^[A-Za-z0-9]+$)+/|unique:students,student_id,'.$this->get('id'),
+                    'studentName' => 'required|
+                                    regex:/^[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/',
+                    'studentId' => 'required|
+                                    regex:/(^[A-Za-z0-9]+$)+/|
+                                    unique:students,student_id,'.$this->get('id'),
                     'studentEmail' => 'required|email|unique:students,email,'.$this->get('id'),
                     'studentClass' => 'required',
                     'studentGender' => 'required',
-                    'studentPhone' => 'required|numeric',
+                    'studentPhone' => 'required|numeric|digits_between:10,11',
                     'studentBirthday' => 'required|date_format:d-m-Y|size:10'
                 ];
             }
@@ -74,6 +78,7 @@ class FormRequest extends Request
     {
         return [
             'studentName.required' => 'Tên sinh viên không được để trống',
+            'studentName.regex' => 'Tên sinh viên không hợp lệ',
             'studentId.required'  => 'Mã SV không được để trống',
             'studentId.regex' => 'Mã SV chỉ được bao gồm chữ và số',
             'studentId.unique' => 'Mã SV đã tồn tại',
@@ -84,6 +89,7 @@ class FormRequest extends Request
             'studentGender.required' => 'Hãy chọn giới tính',
             'studentPhone.required' => 'SĐT không được để trống',
             'studentPhone.numeric' => 'SĐT không hợp lệ',
+            'studentPhone.digits_between' => 'SĐT chỉ được gồm 10-11 số',
             'studentBirthday.required' => 'Ngày sinh không được để trống',
             'studentBirthday.date_format' => 'Ngày sinh không hợp lệ',
             'studentBirthday.size' => 'Ngày sinh không hợp lệ'

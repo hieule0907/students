@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Students List</div>
 
@@ -19,11 +19,12 @@
                                 <th>SĐT</th>
                                 <th>Ngày sinh</th>
                                 <th>Action</th>
+                                <th>Select</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach($students as $student)
-                            <tr id="student{{ $student->id }}">
+                            <tr id="student{{ $student->id }}" student-row-id="{{ $student->id }}">
                                 <td>{{ $student->name }}</td>
                                 <td>{{ $student->student_id }}</td>
                                 <td>{{ $student->email }}</td>
@@ -32,13 +33,22 @@
                                 <td>{{ $student->phone }}</td>
                                 <td>{{ date('d-m-Y', strtotime($student->birthday)) }}</td>
                                 <td>
-                                    <a href="student/{{ $student->id }}/edit"><button class="btn btn-sm btn-primary"> Edit </button></a> | 
-                                    <button class="btn btn-sm btn-danger delete-student" value="{{ $student->id }}"> Delete </a>
+                                    <a href="student/{{ $student->id }}/edit">
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-sm btn-danger delete-student" value="{{ $student->id }}"> <i class="glyphicon glyphicon-trash"></i></a>
                                 </td>
+                                <td><input type="checkbox" class="sub_chk" student-id="{{ $student->id }}"></td>
                             </tr>
                         @endforeach
                         </tbody>
+                        <div class="text-right">
+                        <button class="btn btn-danger btn-md delete-selected">Xóa nhiều</button>
+                    </div>
                     </table>
+                    
                 </div>
             </div>
 
@@ -49,4 +59,48 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $('.delete-selected').click(function(){
+
+        var allVals = [];
+
+        $('.sub_chk:checked').each(function(){
+
+            allVals.push($(this).attr('student-id'));
+
+        });
+
+        if(allVals.length <=0){  
+
+            alert("Please select row.");  
+
+        } else {  
+
+            console.log(allVals);
+            var check = confirm('Are you sure?');
+            if (check) {
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                
+                $.ajax({
+                    type: "DELETE",
+                    url: "/student/delete-multiple",
+                    data: { studentIdArray : allVals },
+                    success: function (data) {
+                        $.each(allVals, function( index, value ) {
+                            $('table tr').filter("[student-row-id='" + value + "']").remove();
+                        });
+                    },
+                    error: function (data) {
+                        
+                    }
+                });
+            }
+        }
+    })
+</script>
 @endsection

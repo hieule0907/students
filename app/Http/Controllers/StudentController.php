@@ -164,7 +164,14 @@ class StudentController extends Controller
     public function destroy($id)
     {
 
-        $student = Student::destroy($id);
+        Student::destroy($id);
+
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+
+        Student::destroy($request->input('studentIdArray'));
 
     }
 }

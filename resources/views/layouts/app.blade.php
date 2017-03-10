@@ -32,6 +32,8 @@
 
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 
+    
+
     <!-- Datepicker -->
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>    
@@ -40,7 +42,7 @@
     <!-- Jquery Validation -->
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 
-
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.13/api/fnReloadAjax.js"></script>
     <style>
         body {
             font-family: 'Lato';
@@ -52,9 +54,7 @@
         .error {
             color:red;
         }
-        .valid {
-            color:green;
-        }
+        
     </style>
 </head>
 <body id="app-layout">
