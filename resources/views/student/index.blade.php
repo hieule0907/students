@@ -62,48 +62,4 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $('.delete-selected').click(function(){
-
-        var allVals = [];
-
-        $('.sub_chk:checked').each(function(){
-
-            allVals.push($(this).attr('student-id'));
-
-        });
-
-        if(allVals.length <=0){  
-
-            alert("Please select row.");  
-
-        } else {  
-
-            console.log(allVals);
-            var check = confirm('Are you sure?');
-            if (check) {
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                })
-                
-                $.ajax({
-                    type: 'DELETE',
-                    url: '/delete-multiple',
-                    data: { studentIdArray : allVals },
-                    success: function (data) {
-                        $.each(allVals, function( index, value ) {
-                            $('table tr').filter("[student-row-id='" + value + "']").remove();
-                        });
-                    },
-                    error: function (data) {
-                        console.log('Error' +data);
-                    }
-                });
-            }
-        }
-    })
-</script>
 @endsection
