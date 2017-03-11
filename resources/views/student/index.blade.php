@@ -48,7 +48,7 @@
                         <button class="btn btn-danger btn-md delete-selected">Xóa nhiều</button>
                     </div>
                     </table>
-                    
+                    {{ $students->links() }}
                 </div>
             </div>
 

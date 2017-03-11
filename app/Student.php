@@ -21,7 +21,7 @@ class Student extends Model
     }
 
     public static function getStudentList() {
-        return self::get();
+        return self::with('class')->paginate(5);
     }
 
     public static function findStudent($id) {

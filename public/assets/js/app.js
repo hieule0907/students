@@ -1,6 +1,7 @@
- $(document).ready(function() {
+var oTable;
+$(document).ready(function() {
 
-    $('#students-list').DataTable();
+    //oTable = $('#students-list').DataTable();
 
 
     $(document).on('click','.delete-student',function() {

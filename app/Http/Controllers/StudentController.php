@@ -62,7 +62,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::getStudentList();
-
+        
         return view('student.index', ['students' => $students]);
     }
 
@@ -170,7 +170,7 @@ class StudentController extends Controller
 
     public function deleteMultiple(Request $request)
     {
-
+        
         Student::destroy($request->input('studentIdArray'));
 
     }
