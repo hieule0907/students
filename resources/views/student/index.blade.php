@@ -19,7 +19,7 @@
                                 <th>SĐT</th>
                                 <th>Ngày sinh</th>
                                 <th>Action</th>
-                                <th>Select</th>
+                                <th><input type="checkbox" id="delete-all"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,10 +44,13 @@
                             </tr>
                         @endforeach
                         </tbody>
-                        <div class="text-right">
-                        <button class="btn btn-danger btn-md delete-selected">Xóa nhiều</button>
-                    </div>
+                        <tfoot>
+                            <div class="text-right">
+                            <button class="btn btn-danger btn-md delete-selected">Xóa nhiều</button>
+                            </div>
+                        </tfoot>
                     </table>
+
                     {{ $students->links() }}
                 </div>
             </div>
@@ -87,8 +90,8 @@
                 })
                 
                 $.ajax({
-                    type: "DELETE",
-                    url: "/student/delete-multiple",
+                    type: 'DELETE',
+                    url: '/delete-multiple',
                     data: { studentIdArray : allVals },
                     success: function (data) {
                         $.each(allVals, function( index, value ) {
@@ -96,7 +99,7 @@
                         });
                     },
                     error: function (data) {
-                        
+                        console.log('Error' +data);
                     }
                 });
             }

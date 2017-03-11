@@ -34,4 +34,4 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 Route::resource('student', 'StudentController');
-Route::delete('/student/delete-multiple', 'StudentController@deleteMultiple');
+Route::delete('/delete-multiple', 'StudentController@deleteMultiple');

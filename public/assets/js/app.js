@@ -1,8 +1,4 @@
-var oTable;
 $(document).ready(function() {
-
-    //oTable = $('#students-list').DataTable();
-
 
     $(document).on('click','.delete-student',function() {
         if (confirm("Are you sure?")) {

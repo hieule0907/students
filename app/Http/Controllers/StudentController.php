@@ -172,6 +172,6 @@ class StudentController extends Controller
     {
         
         Student::destroy($request->input('studentIdArray'));
-
+        
     }
 }
